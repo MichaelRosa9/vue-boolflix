@@ -32,7 +32,6 @@ export default {
   methods: {
     searchText(){
       this.$emit('searchText', this.inputText);
-      /* this.inputText = ''; */
     },
     select(str){
       this.$emit('categorySelect', str)
@@ -58,13 +57,27 @@ nav {
   input {
     outline: none;
   }
+  button {
+    
+    &:hover {
+      cursor: pointer;
+    }
+  }
 
+  button:active,
+  .category:active {
+      background-color: lightgrey;
+  }
   .category {
     display: inline-block;
     position: relative;
     border: solid 1px;
     background-color: white;
 
+    &:hover {
+      cursor: pointer;
+    }
+    
     ul{
       position: absolute;
       top: 30px;
