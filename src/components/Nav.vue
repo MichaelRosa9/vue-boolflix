@@ -32,7 +32,7 @@ export default {
   methods: {
     searchText(){
       this.$emit('searchText', this.inputText);
-      this.inputText = '';
+      /* this.inputText = ''; */
     },
     select(str){
       this.$emit('categorySelect', str)

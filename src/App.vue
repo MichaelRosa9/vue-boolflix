@@ -37,12 +37,12 @@ export default {
       lang: 'it-IT',
       inputTextNav: '',
       shows: [],
-      category:''
+      category:'movie'
     
     }
   },  
   methods: {
-    searchShow($event){
+    searchShow($event){ // metodo che mi cerca l'input preso dal componente Nav dentro l'API 
       this.inputTextNav = $event;
       axios.get(this.apiURL,{
       params: {
@@ -57,15 +57,16 @@ export default {
       console.log(err);
     })
     },
-    categorySelect(str){ //funzione che prende l'emit dal nav
-      this.category = str;
+    categorySelect(str){ //funzione che prende l'emit dalla funzion categorySelect dentro il div category dentro il componente Nav e mi sceglie tra la categoria tv o film cambiando l'URL dell'API
+      this.category = str
       if(str === 'tv'){
         this.apiURL = 'https://api.themoviedb.org/3/search/tv'
-        console.log (this.apiURL);
       }else{
         this.apiURL = 'https://api.themoviedb.org/3/search/movie'
-        console.log (this.apiURL);
       }
+
+      //al cambio di categoria richiamo la funzione che mi cerca l'inpute nell'api
+      this.searchShow(this.inputTextNav)
     }
   }
 }
