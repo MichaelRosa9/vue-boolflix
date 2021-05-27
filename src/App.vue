@@ -2,17 +2,19 @@
   <div id="app">
     <header>
       <div class="logo"></div>
-      <Nav v-on:searchText="searchShow($event)" />
+      <Nav v-on:searchText="searchShow($event)"
+        v-on:categorySelect="categorySelect"
+       />
     </header>
 
     <main>
       <div class="container">
         <Thumbnail class="thumbnail" 
           v-for="show in shows" :key="show.id"
-          :show="show"
+          :show="show" :category='category'
          />
-
       </div>
+      
     </main>
   </div>
 </template>
@@ -35,12 +37,10 @@ export default {
       lang: 'it-IT',
       inputTextNav: '',
       shows: [],
+      category:''
     
     }
-  },
-  created(){
-    
-  },
+  },  
   methods: {
     searchShow($event){
       this.inputTextNav = $event;
@@ -56,6 +56,16 @@ export default {
     }).catch(err => {
       console.log(err);
     })
+    },
+    categorySelect(str){ //funzione che prende l'emit dal nav
+      this.category = str;
+      if(str === 'tv'){
+        this.apiURL = 'https://api.themoviedb.org/3/search/tv'
+        console.log (this.apiURL);
+      }else{
+        this.apiURL = 'https://api.themoviedb.org/3/search/movie'
+        console.log (this.apiURL);
+      }
     }
   }
 }

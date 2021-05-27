@@ -7,9 +7,14 @@
    <button
     @click="searchText(inputText)"
    >search</button>
-   <select name="language" id="">
-     <option value="">Select Language</option>
-   </select>
+   <div class="category">
+     <h3>Category</h3>
+    <ul >
+      <li @click="select('tv')"><a href="#">tv</a></li>
+      <li @click="select('movie')"><a href="#">movie</a></li>
+    </ul>
+
+   </div>
  </nav>
 </template>
 
@@ -28,6 +33,9 @@ export default {
     searchText(){
       this.$emit('searchText', this.inputText);
       this.inputText = '';
+    },
+    select(str){
+      this.$emit('categorySelect', str)
     }
   }
 }
@@ -37,15 +45,45 @@ export default {
 <style scoped lang="scss">
 nav {
 
-  input, button, select {
+  input, button, .category {
     height: 50%;
     margin-right: 20px;
     padding: 5px;
-    border: none;
     border-radius: 4px;
   }
+  input, button, {  
+    border: none;
+  }
+
   input {
     outline: none;
+  }
+
+  .category {
+    display: inline-block;
+    position: relative;
+    border: solid 1px;
+    background-color: white;
+
+    ul{
+      position: absolute;
+      top: 30px;
+      left: 0;
+      display: none;
+      background-color: rgba(#f5a5a5, .5);
+      width: 100%;
+      li{
+        cursor: pointer;
+        text-transform: uppercase;
+        &:hover{
+        background-color: rgba(#000000, .5);
+      }
+      }
+    }
+    &:hover ul {
+      display: inline-block;
+      
+    }
   }
 }
 
