@@ -6,12 +6,23 @@
       <h3>
       {{ show.title }}
     </h3>
+
     <h4>
       {{ show.originaltitle }}
     </h4>
-    <h5>
+
+    <div v-if="show.original_languag === 'it'">
+    <flag iso="it" /> 
+    </div>
+
+    <div v-else-if="show.original_languag === 'en'">
+    <flag iso="us" /> 
+    </div>
+
+    <h5 v-else>
       Lang: {{ show.original_languag }}
     </h5>
+
     <h6>
       Rated: {{ show.vote_average }}
     </h6>
@@ -47,6 +58,8 @@
 </template>
 
 <script>
+
+
 export default {
   name: 'Thumbnail',
   props:{
