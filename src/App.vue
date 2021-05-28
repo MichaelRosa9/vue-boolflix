@@ -23,6 +23,8 @@
 import axios from 'axios'
 import Nav from './components/Nav.vue';
 import Thumbnail from './components/Thumbnail.vue';
+
+
 export default {
   name: 'App',
   components: {
