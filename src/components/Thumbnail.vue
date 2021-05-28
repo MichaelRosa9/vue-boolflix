@@ -16,21 +16,17 @@
     </h4>
 
     <div class="lang-flag">
-      <div v-if="show.original_language === 'it'"> <!-- Bandiera IT -->
+      <div > <!-- Bandiera-->
       <flag :iso="show.original_language" />
     </div>
 
-    <div v-else-if="show.original_language === 'en'"> <!-- Bandiera ENG -->
+    <div v-if="show.original_language === 'en'"> <!-- Bandiera ENG -->
      <flag iso="gb" />
     </div>
 
-    <div v-else-if="show.original_language === 'ja'"> <!-- Bandiera ENG -->
+    <div v-else-if="show.original_language === 'ja'"> <!-- Bandiera Japan -->
      <flag iso="jp" />
-    </div>
-
-    <div v-else-if="show.original_language === 'es'"> <!-- Bandiera ENG -->
-     <flag :iso="show.original_language" />
-    </div>
+    </div>    
 
     <h5 v-else>
       Lang: {{ show.original_language }}
@@ -38,8 +34,12 @@
     </div>
 
     <div class="stars">
-      <span v-for="(star, index) in convertRatingTo5" :key="index">
+      <span v-for="(star, indexStar) in convertRatingTo5" :key="indexStar">
         <i class="fas fa-star"></i>
+      </span>
+      
+      <span v-for="(empty_star, index) in subtract" :key="index">
+        <i class="far fa-star"></i>
       </span>
       
     </div>
@@ -71,13 +71,13 @@ export default {
     convertRatingTo5() { //funzione che mi converte il rating da 1-10 a un rating da 1-5
       let oldRating = 10;
       let result = parseInt((Math.round(this.rating * this.show.vote_average) / oldRating).toFixed(0));
-      console.log(result)
       return result
-      /* let star = {star:'<i class="fas fa-star"></i>'};
-      for (let i = 0; i < result; i++){
-        this.starArray.push(star);        
-      } */
-
+    },
+    subtract() {      
+      let maxStars = 5;
+      let empty_star = parseInt(maxStars - this.convertRatingTo5)
+      console.log(empty_star)
+      return empty_star
     }
   }
 }
