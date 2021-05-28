@@ -34,11 +34,13 @@
     </div>
 
     <div class="stars">
-      <span v-for="(star, indexStar) in convertRatingTo5" :key="indexStar">
+      
+      <span v-for="(star, index) in convertRatingTo5" :key="index"> <!-- stelle piene -->
         <i class="fas fa-star"></i>
       </span>
       
-      <span v-for="(empty_star, index) in subtract" :key="index">
+
+      <span v-for="(empty_star, index) in emptyStars" :key="index"> <!-- stelle vuote -->
         <i class="far fa-star"></i>
       </span>
       
@@ -73,10 +75,10 @@ export default {
       let result = parseInt((Math.round(this.rating * this.show.vote_average) / oldRating).toFixed(0));
       return result
     },
-    subtract() {      
+    emptyStars() {  //funzione che mi ritorna il numero di stelle vuote da ciclare nel v-for
       let maxStars = 5;
-      let empty_star = parseInt(maxStars - this.convertRatingTo5)
-      console.log(empty_star)
+      let empty_star = parseInt(maxStars - this.convertRatingTo5);
+      console.log(empty_star);
       return empty_star
     }
   }
