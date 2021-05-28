@@ -35,12 +35,11 @@
 
     <div class="stars">
       
-      <span v-for="(star, index) in convertRatingTo5" :key="index"> <!-- stelle piene -->
+      <span v-for="index in convertRatingTo5" :key="`${index}star`"> <!-- stelle piene -->
         <i class="fas fa-star"></i>
       </span>
       
-
-      <span v-for="(empty_star, index) in emptyStars" :key="index"> <!-- stelle vuote -->
+      <span v-for="index in emptyStars" :key="`${index}empty-star`"> <!-- stelle vuote -->
         <i class="far fa-star"></i>
       </span>
       
