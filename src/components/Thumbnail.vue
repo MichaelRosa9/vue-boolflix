@@ -1,6 +1,10 @@
 <template>
-  <div >
-    <img :src="imgBaseURL + width500 +show.poster_path" :alt="show.title">
+  <div>
+    <img v-if="show.poster_path !== null" :src="imgBaseURL + width500 +show.poster_path" :alt="show.title">
+    
+    <div v-else class="not-found">
+    <h4> immage unavailable</h4>
+    </div>
 
     <div class="info">
       <h3>
@@ -34,9 +38,10 @@
     </div>
 
     <div class="stars">
-      <span v-for="(star, index) in newMaxRating" :key="index">
+      <span v-for="(star, index) in convertRatingTo5" :key="index">
         <i class="fas fa-star"></i>
       </span>
+      
     </div>
     </div>
   </div>
@@ -59,22 +64,22 @@ export default {
     return{
       imgBaseURL: 'https://image.tmdb.org/t/p/',
       width500: 'w500',
-      newMaxRating: 5,
-      starArray: []
+      rating: 5,
     }
   },
-  /* created: {
-    convertRatingTo5(vote_average){ //funzione che mi converte il rating da 1-10 a un rating da 1-5
-      let oldMaxRating = 10;
-      let newMaxRating = 5;
-      let result = ((newMaxRating * vote_average) / oldMaxRating).toFixed(0);
-      let star = {star:'<i class="fas fa-star"></i>'};
+  computed:{
+    convertRatingTo5() { //funzione che mi converte il rating da 1-10 a un rating da 1-5
+      let oldRating = 10;
+      let result = parseInt((Math.round(this.rating * this.show.vote_average) / oldRating).toFixed(0));
+      console.log(result)
+      return result
+      /* let star = {star:'<i class="fas fa-star"></i>'};
       for (let i = 0; i < result; i++){
-        this.starArray.push(star); 
-       
-      }
+        this.starArray.push(star);        
+      } */
+
     }
-  } */
+  }
 }
 </script>
 
@@ -88,8 +93,12 @@ export default {
       width: 50%;
       object-fit: cover;
     }
-    .mr-star {
-      color: inherit;
+    
+    .not-found{
+      h4 {
+        text-transform: uppercase;
+      }
     }
   }
+    
 </style>
