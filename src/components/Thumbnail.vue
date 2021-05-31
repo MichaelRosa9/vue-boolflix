@@ -1,50 +1,53 @@
 <template>
-  <div class="show-wrap">
+  <div class="show-wrap"
+  @click="infoActive = !infoActive">
     <img v-if="show.poster_path !== null" :src="imgBaseURL + width500 +show.poster_path" :alt="show.title"
-      @click="infoActive = !infoActive"
+      
     >
     
     <div v-else class="not-found">
       <h4> immage unavailable</h4>
     </div>
 
-    <div class="info-wrap"
-      :class="{active: infoActive}"
-      @click="infoActive = !infoActive"
-    >
-    <div class="info">
-      <h3>
-      {{ show.title || show.name }}
-      </h3>
+    <transition name="fade">
+      <div class="info-wrap"
+          v-if="infoActive"
+        >
+        <div class="info">
+          <h3>
+          {{ show.title || show.name }}
+          </h3>
 
-      <h4>
-        {{ show.originaltitle ||show.originalname }}
-      </h4>
+          <h4>
+            {{ show.originaltitle ||show.originalname }}
+          </h4>
 
-      <div class="lang-flag">      
-        <flag :iso="show.original_language" />
+          <div class="lang-flag">      
+            <flag :iso="show.original_language" />
+          </div>
+
+          <div v-if="show.original_language === 'en'"> <!-- Bandiera ENG -->
+            <flag iso="gb" />
+          </div>
+
+          <div v-else-if="show.original_language === 'ja'"> <!-- Bandiera Japan -->
+            <flag iso="jp" />
+          </div>
+
+          <div class="stars">      
+            <span v-for="index in convertRatingTo5" :key="`${index}full-star`"> <!-- stelle piene -->
+              <i class="fas fa-star"></i>
+            </span>
+            
+            <span v-for="index in emptyStars" :key="`${index}empty-star`"> <!-- stelle vuote -->
+              <i class="far fa-star"></i>
+            </span>
+          </div>
+        </div>
       </div>
 
-      <div v-if="show.original_language === 'en'"> <!-- Bandiera ENG -->
-        <flag iso="gb" />
-      </div>
-
-      <div v-else-if="show.original_language === 'ja'"> <!-- Bandiera Japan -->
-        <flag iso="jp" />
-      </div>
-
-      <div class="stars">      
-        <span v-for="index in convertRatingTo5" :key="`${index}full-star`"> <!-- stelle piene -->
-          <i class="fas fa-star"></i>
-        </span>
-        
-        <span v-for="index in emptyStars" :key="`${index}empty-star`"> <!-- stelle vuote -->
-          <i class="far fa-star"></i>
-        </span>
-      </div>    
-
-    </div>
-    </div>
+    
+    </transition>
 
   </div>
 
@@ -111,24 +114,24 @@ div.show-wrap {
 
   .info-wrap {
     position: absolute;
-    display: none;
     height: 100%;
     top: 0;
-    background-color: rgba(#000000, .2);
-    opacity: .1;
-    transition: opacity .5s; /* Animation */
+    background-color: rgba(#000000, .5);
+    
   }  
-
-  .info-wrap.active  {
-    display: block;    
-    opacity: .9;
-  }
-
   .info {
     position: absolute;
     top: 50%;
     left: 10px;
     transform: translateY(50%);
+  }
+
+  /* transition */
+  .fade-enter-active, .fade-leave-active {
+  transition: opacity .9s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
   }
 }
 </style>
