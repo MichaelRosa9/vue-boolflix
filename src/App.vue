@@ -9,6 +9,7 @@
 
     <main>
       <div class="container">
+        <!-- <h2>{{ results }} risultati trovati</h2> -->
         <Thumbnail class="thumbnail" 
           v-for="show in shows" :key="show.id"
           :show="show" :category='category'
@@ -35,12 +36,14 @@ export default {
     return{
       apiURL: 'https://api.themoviedb.org/3/search/movie',
       apiKey: 'be3fa3bd2b20925e1d6c0b3adfcb12d6',
-      query: '',
+      query: 'mostpopular',
       lang: 'it-IT',
       inputTextNav: '',
       shows: [],
-      category:'movie'
-    
+      category:'movie',
+      results:'',
+      page:'',
+      totalPages:'',
     }
   },  
   methods: {
@@ -53,7 +56,9 @@ export default {
         language: this.lang
       }
     }).then(response => {
+      this.results = response.data.total_results;
       this.shows = response.data.results;
+      this.page = response.data.page;
       
     }).catch(err => {
       console.log(err);
@@ -82,6 +87,10 @@ header {
   background-color: red;
 }
 main {
-  background-color: black;
+  background-color: rgb(158, 154, 154);
+  
+  .thumbnail {
+    margin-top: 20px;
+  }
 }
 </style>
