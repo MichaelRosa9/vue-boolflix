@@ -10,3 +10,23 @@
   width: 100%;
   background-color: rgba(#000000, .2);
 }
+
+.flex-center-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-items-center {
+  display: flex;
+  justify-content:flex-start;
+  align-items: center;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.basis-5 {
+  flex-basis: 18%;
+}

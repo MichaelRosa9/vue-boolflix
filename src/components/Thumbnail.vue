@@ -1,12 +1,12 @@
 <template>
   <div class="show-wrap"
   @click="infoActive = !infoActive">
-    <img v-if="show.poster_path !== null" :src="imgBaseURL + width500 +show.poster_path" :alt="show.title"
-      
-    >
+    <img v-if="show.poster_path !== null" :src="imgBaseURL + width500 +show.poster_path" :alt="show.title">
     
-    <div v-else class="not-found">
-      <h4> immage unavailable</h4>
+    <div v-else class="img-not-found">
+      <h3> {{ show.title || show.name }}</h3>
+      <span> Immage unavailable...</span>
+      <span>Click for more info!</span>
     </div>
 
     <transition name="fade">
@@ -22,16 +22,18 @@
             {{ show.originaltitle ||show.originalname }}
           </h4>
 
-          <div class="lang-flag">      
-            <flag :iso="show.original_language" />
-          </div>
+          <div class="flags">
+            <div class="lang-flag">      
+              <flag :iso="show.original_language" />
+            </div>
 
-          <div v-if="show.original_language === 'en'"> <!-- Bandiera ENG -->
-            <flag iso="gb" />
-          </div>
+            <div v-if="show.original_language === 'en'"> <!-- Bandiera ENG -->
+              <flag iso="gb" />
+            </div>
 
-          <div v-else-if="show.original_language === 'ja'"> <!-- Bandiera Japan -->
-            <flag iso="jp" />
+            <div v-else-if="show.original_language === 'ja'"> <!-- Bandiera Japan -->
+              <flag iso="jp" />
+            </div>
           </div>
 
           <div class="stars">      
@@ -43,6 +45,10 @@
               <i class="far fa-star"></i>
             </span>
           </div>
+
+          <p class="description">
+            {{ show.overview }}
+          </p>
         </div>
       </div>
 
@@ -92,6 +98,7 @@ div.show-wrap {
   width: 290px;
   height: 400px;
   color: white;
+  border: 2px solid rgb(156, 156, 156);
   transition: transform .4s; /* Animation */
 
   img, 
@@ -112,20 +119,47 @@ div.show-wrap {
     }
   }
 
-  .info-wrap {
+  .info-wrap,
+  .img-not-found {
     position: absolute;
     height: 100%;
+    width: 100%;
     top: 0;
     background-color: rgba(#000000, .5);
     
+  }
+  .img-not-found {
+
+    h3, span{
+      margin-top: 20px;
+    }
+    span {
+      display: block;
+    }
   }  
+
   .info {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(50%);
+    height: 100%;
+    padding-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    
+    h3 {
+      font-size: 23px;
+    }
+    .stars {
+      color: gold;
+    }
+    p {
+      height: 68%;
+      font-size: 15px;
+      line-height: 21px;
+      overflow: auto;
+      padding-right: 10px;
+    }
   }
 
+  
   /* transition */
   .fade-enter-active, .fade-leave-active {
   transition: opacity .9s;

@@ -1,14 +1,19 @@
 <template>
  <nav>
+   <div class="input-section">
    <input type="text"
     v-model="inputText"
     @keyup.enter="searchText(inputText)"
+    placeholder="Search show"
+    ref="inputRef"
    >
+   <i class="fas fa-search" @click="setFocus()"></i>
+   </div>
    <button
     @click="searchText(inputText)"
-   >search</button>
+   >Search</button>
    <div class="category">
-     <h3>Category</h3>
+     <span>Category</span>
     <ul >
       <li @click="select('tv')"><a href="#">tv</a></li>
       <li @click="select('movie')"><a href="#">movie</a></li>
@@ -26,7 +31,7 @@ export default {
   },
   data(){
     return{
-      inputText:''
+      inputText:'',
     }
   },
   methods: {
@@ -34,7 +39,10 @@ export default {
       this.$emit('searchText', this.inputText);
     },
     select(str){
-      this.$emit('categorySelect', str)
+      this.$emit('categorySelect', str);
+    },
+    setFocus() { //funzione che mette il focus nell'input 
+      this.$refs.inputRef.focus()
     }
   }
 }
@@ -42,37 +50,67 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-nav {
+nav {  
+  color: white;
+
+  .input-section {
+    display: inline-block;
+    position: relative;
+    input {
+      color: rgb(187, 179, 179);
+      font-size: 15px;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 2px solid red;
+      background-color: rgb(63, 36, 36);
+      outline: none;
+    }
+
+    i {
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: text;
+    }
+
+  }
 
   input, button, .category {
-    height: 50%;
-    margin-right: 20px;
-    padding: 5px;
-    border-radius: 4px;
-  }
-  input, button, {  
-    border: none;
+      height: 50%;
+      margin-right: 20px;
+      padding: 5px; // .category ha il suo padding personale
+      border-radius: 4px;
   }
 
-  input {
-    outline: none;
-  }
   button {
-    
+    color: inherit;
+    background-color: transparent;
+    border: 1px solid;
     &:hover {
       cursor: pointer;
     }
   }
 
-  button:active,
-  .category:active {
+  button:active{
       background-color: lightgrey;
   }
+  
   .category {
     display: inline-block;
     position: relative;
-    border: solid 1px;
-    background-color: white;
+    padding: 5px 15px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid rgb(172, 66, 5);
+    background-color: transparent;
+    transition: color .5s;
+    
+    &:hover span {      
+      color: red;
+    }
 
     &:hover {
       cursor: pointer;
@@ -83,19 +121,24 @@ nav {
       top: 30px;
       left: 0;
       display: none;
-      background-color: rgba(#f5a5a5, .5);
+      background-color: rgba(#000000, .2);
       width: 100%;
       li{
-        cursor: pointer;
+        padding: 5%;
         text-transform: uppercase;
+        
         &:hover{
-        background-color: rgba(#000000, .5);
+        /* cursor: pointer; */
+        color: white;
+        background-color: rgba(#5a5555, .9);
+        border-bottom: 1px solid rgb(255, 0, 0);
+        box-shadow: 0px  1px red;
       }
       }
     }
     &:hover ul {
       display: inline-block;
-      
+      z-index: 999;
     }
   }
 }
