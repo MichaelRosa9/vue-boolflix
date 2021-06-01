@@ -38,7 +38,7 @@ export default {
     searchText(){
       this.$emit('searchText', this.inputText);
     },
-    select(str){
+    select(str){ // funzione che mi manda la stringa all'app per cambiare la ricerca API tra film e serie
       this.$emit('categorySelect', str);
     },
     setFocus() { //funzione che mette il focus nell'input 
@@ -48,7 +48,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 nav {  
   color: white;
@@ -57,7 +56,7 @@ nav {
     display: inline-block;
     position: relative;
     input {
-      color: rgb(187, 179, 179);
+      color: white;
       font-size: 15px;
       border-top: none;
       border-left: none;
@@ -87,7 +86,7 @@ nav {
   button {
     color: inherit;
     background-color: transparent;
-    border: 1px solid;
+    border: none;
     &:hover {
       cursor: pointer;
     }
@@ -96,22 +95,23 @@ nav {
   button:active{
       background-color: lightgrey;
   }
-  
+  .category:hover span,
+  button:hover  {      
+      color: red;
+  }
+
   .category {
     display: inline-block;
     position: relative;
     padding: 5px 15px;
     border-top: none;
-    border-left: none;
+    border-left: 2px solid rgb(172, 66, 5);
     border-right: none;
-    border-bottom: 2px solid rgb(172, 66, 5);
+    border-bottom: none;
     background-color: transparent;
     transition: color .5s;
     
-    &:hover span {      
-      color: red;
-    }
-
+    
     &:hover {
       cursor: pointer;
     }

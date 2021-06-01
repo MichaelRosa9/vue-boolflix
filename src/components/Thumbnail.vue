@@ -1,6 +1,7 @@
 <template>
   <div class="show-wrap"
-  @click="infoActive = !infoActive">
+    @click="infoActive = !infoActive"
+    >
     <img v-if="show.poster_path !== null" :src="imgBaseURL + width500 +show.poster_path" :alt="show.title">
     
     <div v-else class="img-not-found">
@@ -9,7 +10,7 @@
       <span>Click for more info!</span>
     </div>
 
-    <transition name="fade">
+    <transition name="fade"><!-- con il tag transition e il name posso usare la proprieta transition del CSS  -->
       <div class="info-wrap"
           v-if="infoActive"
         >
@@ -95,8 +96,8 @@ export default {
 
 div.show-wrap {
   position: relative;
-  width: 290px;
-  height: 400px;
+  width: 250px;
+  height: 360px;
   color: white;
   border: 2px solid rgb(156, 156, 156);
   transition: transform .4s; /* Animation */
@@ -125,11 +126,11 @@ div.show-wrap {
     height: 100%;
     width: 100%;
     top: 0;
-    background-color: rgba(#000000, .5);
+    background-color: rgba(#000000, .8);
     
   }
   .img-not-found {
-
+    background-color: rgb(161, 59, 59);
     h3, span{
       margin-top: 20px;
     }
@@ -149,9 +150,11 @@ div.show-wrap {
     }
     .stars {
       color: gold;
+      margin-top: 7px;
     }
     p {
-      height: 68%;
+      margin-top: 15px;
+      height: 60%;
       font-size: 15px;
       line-height: 21px;
       overflow: auto;
