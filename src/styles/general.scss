@@ -24,3 +24,16 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+button {
+  border: none;
+  color: white;
+  background-color: transparent;
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
+  &:active{
+    color: rgb(252, 189, 189);
+  }
+}

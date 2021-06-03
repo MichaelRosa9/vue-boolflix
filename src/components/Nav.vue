@@ -27,7 +27,7 @@
 export default {
   name: 'Nav',
   props: {
-   
+    
   },
   data(){
     return{
@@ -72,6 +72,10 @@ nav {
       top: 50%;
       transform: translateY(-50%);
       cursor: text;
+
+      &:active {
+        color: red;
+      }
     }
 
   }
@@ -82,22 +86,8 @@ nav {
       padding: 5px; // .category ha il suo padding personale
       border-radius: 4px;
   }
-
-  button {
-    color: inherit;
-    background-color: transparent;
-    border: none;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  button:active{
-      background-color: lightgrey;
-  }
-  .category:hover span,
-  button:hover  {      
-      color: red;
+  .category:hover span {      
+    color: red;
   }
 
   .category {
@@ -128,7 +118,6 @@ nav {
         text-transform: uppercase;
         
         &:hover{
-        /* cursor: pointer; */
         color: white;
         background-color: rgba(#5a5555, .9);
         border-bottom: 1px solid rgb(255, 0, 0);

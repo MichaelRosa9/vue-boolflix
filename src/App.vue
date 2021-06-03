@@ -6,7 +6,7 @@
         <h1>Boolflix</h1>
       </div>
       <Nav v-on:searchText="searchShow($event)"
-        v-on:categorySelect="categorySelect"
+        v-on:categorySelect="categorySelect"        
        />
 
       </div>
@@ -25,7 +25,18 @@
           </div>
 
           <div v-if="searchedResult === true" class="pages flex-center-center">
-            <button @click="setPage(index)"  v-for="index in total_pages" :key="index"> {{ index }} </button>
+            <button v-for="index in slicedPages" :key="index"
+              @click="setPage(index)"  
+              :class="page === index ? 'active':null" 
+            >
+            {{ index }}
+            </button>
+            <span>...</span>
+            <button @click="setPage(total_pages)"  
+              :class="page === total_pages ? 'active':null"
+              >
+              {{ total_pages }}
+              </button>
           </div>  
 
         </div>
@@ -73,7 +84,6 @@ export default {
       searchedResult: false,
       total_pages:'',
       page:'',
-      totalPages:'',
       loader: true
     }
   },
@@ -83,8 +93,7 @@ export default {
       api_key: this.apiKey,
       sort_by: this.sort_by,
       language: this.lang
-    }
-    
+    }    
   }).then(response => {
     this.results = response.data.total_results;
     this.shows = response.data.results;
@@ -93,8 +102,16 @@ export default {
     this.loader = false
   }).catch(err => {
     console.log(err);
-  })
-    
+  })    
+  },
+  computed: {
+    slicedPages(){ // funzione che limita il numero di bottoni delle pagine che trovo in fondo alla pagina  
+      let array = [];
+      for(let i = 0; i < this.total_pages; i++){
+        array.push(i);
+      }
+      return array.slice(1,16);
+    }
   },
   methods: {
     searchShow($event){ // metodo che mi cerca dentro l'API tramite l'input preso dal componente Nav 
@@ -137,6 +154,7 @@ export default {
       }).catch(err => {
         console.log(err);
       })
+      
     },
     categorySelect(str){ //funzione che prende l'emit dalla funzion categorySelect dentro il div category dentro il componente Nav e mi sceglie tra la categoria tv o film cambiando l'URL dell'API
       this.category = str
@@ -191,10 +209,13 @@ main {
   .pages {
     width: 100%;
     margin-bottom: 10px;
+    color: white;
     button {
       padding: 10px;
       margin: 5px;
-      cursor: pointer;
+    }
+    span {
+      cursor: default;
     }
   }
   .loading {
